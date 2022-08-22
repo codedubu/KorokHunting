@@ -19,7 +19,7 @@ final class Node {
         self.value = value
     }
     
-    func insert(value: Int) {
+    func insert(_ value: Int) {
         insert(value, parent: self)
     }
     
@@ -59,6 +59,53 @@ final class Node {
         return false
     }
     
+
+    
+    func fancyTreePrint() {
+        
+        var currentLevelQueue: [Node] = [self]
+        var nextLevelQueue: [Node] = []
+        var stringTree: [String] = []
+        var padding = 16
+        
+        while !currentLevelQueue.isEmpty {
+            var padString = ""
+            var padString2 = ""
+            for _ in 1...padding {
+                padString += " "
+            }
+        
+            for node in currentLevelQueue {
+                
+                stringTree.append(String(node.value))
+                
+                if let leftChild = node.leftChild {
+                    nextLevelQueue.append(leftChild)
+                }
+                
+                if let rightChild = node.rightChild {
+                    nextLevelQueue.append(rightChild)
+                }
+    
+            }
+            
+            padding -= 2
+            
+            print(".", padString, stringTree.joined(separator: padString), padString, ".")
+            currentLevelQueue = nextLevelQueue
+            stringTree.removeAll()
+            nextLevelQueue.removeAll()
+            
+        }
+    }
+    
+    /*
+            7
+   5                20
+ 4  6            15    33
+2               10   25
+     */
+    
     
     func breadthFirstTraversal() -> [Int] {
         
@@ -86,7 +133,6 @@ final class Node {
     
     func inOrderTraversal(spacing: String = "") -> [Int] {
         var result: [Int] = []
-        
         
         if let leftChild = leftChild {
             result += leftChild.inOrderTraversal(spacing: spacing + "  ")
@@ -140,7 +186,6 @@ final class Node {
     }
     
     
-    
     func minimum() -> Int {
         var node = self
         
@@ -152,7 +197,6 @@ final class Node {
     }
     
     
-    
     func maximum() -> Int {
         var node = self
         
@@ -162,25 +206,37 @@ final class Node {
         
         return node.value
     }
-    
 }
 
+let bst = Node(4)
+bst.insert(2)
+bst.insert(3)
+bst.insert(7)
+bst.insert(5)
+
+assert(bst.contains(3))
+assert(bst.contains(7))
+assert(!bst.contains(6))
+assert(!bst.contains(1))
+
 let tree = Node(7)
-tree.insert(value: 20)
-tree.insert(value: 5)
-tree.insert(value: 15)
-tree.insert(value: 10)
-tree.insert(value: 4)
-tree.insert(value: 33)
-tree.insert(value: 2)
-tree.insert(value: 25)
-tree.insert(value: 6)
+tree.insert(20)
+tree.insert(5)
+tree.insert(15)
+tree.insert(10)
+tree.insert(4)
+tree.insert(33)
+tree.insert(2)
+tree.insert(25)
+tree.insert(6)
+
+tree.fancyTreePrint()
 
 /*
          7
-    5        20
-  4   6   15    33
- 2                25
+    5          20
+  4   6     15     33
+ 2        10     25
  */
 
 
@@ -213,7 +269,7 @@ tree.insert(value: 6)
  results: 7, 5, 20, 4, 6, 15, 33, 2, 25
  */
 
-dump(tree.breadthFirstTraversal())
+//dump(tree.breadthFirstTraversal())
 //dump(breadthSearchResults)
 //dump(tree.inOrderTraversal())
 
