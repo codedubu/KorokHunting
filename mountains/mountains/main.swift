@@ -18,7 +18,7 @@ import Foundation
 
 func isMountain(arr: [Int]) -> Bool {
     
-    if arr.count < 3 { return false }
+    if arr.count <= 3 { return false }
     
     for i in arr.indices {
         for j in arr.indices {
@@ -43,7 +43,7 @@ extension Array where Element == Int {
     true
     }
 }
-//
+
 assert(isMountain(arr: [-2, 1, 5, 4]) == true)
 assert(isMountain(arr: [-2, 1, 0, 4, 15, 7, 2]) == true)
 assert(isMountain(arr: [-2, 3, 4, 7]) == false)
